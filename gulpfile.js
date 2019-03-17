@@ -164,7 +164,7 @@ gulp.task('image-min', () =>
 gulp.task('watch', function () {
   gulp.watch('./source/sass/**/*.sass', ['sass']);
   gulp.watch('./source/**/*.pug', ['pug']);
-  gulp.watch('./source/js/**/*.js', ['babel']);
+  // gulp.watch('./source/js/**/*.js', ['babel']);
 });
 
 
@@ -185,7 +185,7 @@ gulp.task('default', ['pug', 'sass', 'vendorJs', 'image-min', 'browser-sync', 'w
 //發布前跑一次，他就會把public、tmp資料夾清空，並且重新跑一次內容
 //記得要把env切換到production
 //**gulp build --env production指令碼可以產出最終上線版本
-gulp.task('build', gulpSequence('clean', 'pug', 'sass', 'babel', 'vendorJs', 'image-min'))
+// gulp.task('build', gulpSequence('clean', 'pug', 'sass', 'babel', 'vendorJs', 'image-min'))
 
 
 

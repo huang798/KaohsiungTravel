@@ -2601,15 +2601,48 @@ Id: "C1_397000000A_000164"
 }
 ];
 
+//讓開頭的圖片維持在使用者瀏覽器的100%高度
+document.querySelector('header').style.height = window.innerHeight+"px";
+
+window.onresize = function(){
+   document.querySelector('header').style.height = window.innerHeight+"px"
+};
+
+//
 var data_len = data.length;
 var userPickZone = document.querySelector(".option");
 var show_selection = document.querySelector(".show_selection");
+var recommend_select = document.querySelector(".recommend_wrap");
+var select_zone_name = document.querySelector("#select_zone_name")
+recommend_select.addEventListener('click', updateList_from_recommend, false );
+userPickZone.addEventListener('change', updateList_from_select, false);
 
-userPickZone.addEventListener('change', updateList, false);
 
-function updateList(e){
+var select_initial = "美濃區";
+var str_initial = " ";
+updateList(str_initial, select_initial);
+
+
+//抓取熱門行政區的選擇、切換下方的顯示
+function updateList_from_recommend(e)
+{
+	var select = e.target.innerHTML;
+	var str = " ";
+	updateList(str, select);
+};
+
+//抓取使用者選擇的行政區，並將他顯示出來
+function updateList_from_select(e){
 	var select = e.target.value;
 	var str = " ";
+	updateList(str, select);
+};
+
+function updateList(str, select){
+	var zone_str = " ";
+	zone_str = '<h1 id ="show_zoneName">' + select+'</h1>';
+	select_zone_name.innerHTML = zone_str;
+	// console.log(zone_str);
 	for(var i = 0; i < data.length; i ++){
 		if(data[i].Zone == select){
 			str += 
@@ -2621,9 +2654,9 @@ function updateList(e){
 						'<div class = "name">'+ data[i].Name +'</div>'+
 						'<div class = "zone">'+ data[i].Zone +'</div></div></div>'+	
 			'<div class="content_wrap" data-num="' + i +'">'+ 
-				'<div class = "open_time">'+ data[i].Opentime +'</div>'+
-				'<div class = "address">'+ data[i].Add +'</div>'+
-				'<div class = "tel">'+ data[i].Tel +'</div></div></div>';
+				'<div class = "open_time"><i class="far fa-clock"></i>'+ data[i].Opentime +'</div>'+
+				'<div class = "address"><i class="fas fa-map-marker-alt"></i>'+ data[i].Add +'</div>'+
+				'<div class = "tel"><i class="fas fa-phone"></i>'+ data[i].Tel +'</div></div></div>';
 		};
 
 	
@@ -2632,9 +2665,5 @@ function updateList(e){
 };
 
 
-//讓開頭的圖片維持在使用者瀏覽器的100%高度
-document.querySelector('header').style.height = window.innerHeight+"px";
 
-window.onresize = function(){
-   document.querySelector('header').style.height = window.innerHeight+"px"
-}
+

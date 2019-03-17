@@ -14,14 +14,24 @@ html(lang='en')
 		.intro_section
 			h1#intro_title Welcome to Kaohsiung 高雄
 			p#intro_descrip 高雄位於台灣島西南部，全年陽光普照、氣候宜人。<br>豐富多變的地貌，造就山、海、河、港匯聚的獨特城市景觀及多元族群文化。<br>以豐富的歷史人文、山海資源與人民的豪邁熱情成為名副其實的海洋觀光首都。
-		.recommend_selection
+			a(href="#")#more_info More
+		#select_zone_name
+		#hr_wrap
+			img(src="images/hr.svg", alt="")
+			.recommend_selection
+				h1#recommend_text 熱門行政區
+				.recommend_wrap
+					.btn(value="三民區") 三民區
+					.btn(value="美濃區") 美濃區
+					.btn(value="大樹區") 大樹區
+					.btn(value="鼓山區") 鼓山區
+		
 		.user_select_area
 			select.option
 				option(selected='', disabled='') --請選擇行政區-
 				option(value="苓雅區") 苓雅區
 				option(value="三民區") 三民區
 				option(value="新興區") 新興區
-				option(value="鹽埕區") 鹽埕區
 				option(value="內門區") 內門區
 				option(value="美濃區") 美濃區
 				option(value="大樹區") 大樹區
@@ -47,7 +57,9 @@ html(lang='en')
 				option(value="楠梓區") 楠梓區
 				option(value="前金區") 前金區
 				option(value="鳳山區") 鳳山區
-		.show_selection
+		
+		.show_selection_wrap
+			.show_selection
 			
 		
 		script(src='js/all.js')
