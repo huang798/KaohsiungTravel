@@ -2605,10 +2605,62 @@ Id: "C1_397000000A_000164"
 document.querySelector('header').style.height = window.innerHeight+"px";
 
 window.onresize = function(){
-   document.querySelector('header').style.height = window.innerHeight+"px"
+   document.querySelector('header').style.height = window.innerHeight+"px";
 };
 
-//
+//在最上方時側邊按鈕消失
+window.onscroll=function(){
+        var top = document.documentElement.scrollTop * 2;
+        if(top > window.innerHeight){
+        	var top = document.querySelector('#toTop');
+            top.classList.add('notTop');
+        }else{ 
+            document.querySelector('#toTop').classList.remove('notTop');
+        };
+};
+
+
+ //點選側邊按鈕，滑動到最上方
+document.getElementById('toTop').onclick = function (event) {
+	event.preventDefault();
+	scrollTo(document.documentElement, 0, 1000);   
+};
+    
+//滑動function
+function scrollTo(element, to, duration) {
+    var start = element.scrollTop,
+        change = to - start,
+        currentTime = 0,
+        increment = 20;
+        
+    var animateScroll = function(){        
+        currentTime += increment;
+        var val = Math.easeInOutQuad(currentTime, start, change, duration);
+        element.scrollTop = val;
+        if(currentTime < duration) {
+            setTimeout(animateScroll, increment);
+        }
+    };
+    animateScroll();
+}
+
+
+//滑動的時間
+//t = current time
+//b = start value
+//c = change in value
+//d = duration
+Math.easeInOutQuad = function (t, b, c, d) {
+  t /= d/2;
+	if (t < 1) return c/2*t*t + b;
+	t--;
+	return -c/2 * (t*(t-2) - 1) + b;
+};
+
+
+
+
+//基本宣告
 var data_len = data.length;
 var userPickZone = document.querySelector(".option");
 var show_selection = document.querySelector(".show_selection");
@@ -2617,7 +2669,7 @@ var select_zone_name = document.querySelector("#select_zone_name")
 recommend_select.addEventListener('click', updateList_from_recommend, false );
 userPickZone.addEventListener('change', updateList_from_select, false);
 
-
+var id_select = " ";
 var select_initial = "美濃區";
 var str_initial = " ";
 updateList(str_initial, select_initial);
@@ -2629,6 +2681,23 @@ function updateList_from_recommend(e)
 	var select = e.target.innerHTML;
 	var str = " ";
 	updateList(str, select);
+
+	id_select = e.target.id
+	
+	//將舊有的selected class移除掉
+	remove_select();
+
+	//被點擊的按鈕新增selected class
+	if(id_select == 'btn_1')
+		document.querySelector('#btn_1').classList.add('selected');
+	if(id_select == 'btn_2')
+		document.querySelector('#btn_2').classList.add('selected');
+	if(id_select == 'btn_3')
+		document.querySelector('#btn_3').classList.add('selected');
+	if(id_select == 'btn_4')
+		document.querySelector('#btn_4').classList.add('selected');
+
+	scrolltoShow();
 };
 
 //抓取使用者選擇的行政區，並將他顯示出來
@@ -2636,10 +2705,25 @@ function updateList_from_select(e){
 	var select = e.target.value;
 	var str = " ";
 	updateList(str, select);
+
+	remove_select();
+	scrolltoShow();	
+
 };
 
+//將舊有的selected class移除掉
+function remove_select(){
+	document.querySelector('#btn_1').classList.remove('selected');
+	document.querySelector('#btn_2').classList.remove('selected');
+	document.querySelector('#btn_3').classList.remove('selected');
+	document.querySelector('#btn_4').classList.remove('selected');
+};
+
+
+//將資料列印出來
 function updateList(str, select){
 	var zone_str = " ";
+	var num  = 0;
 	zone_str = '<h1 id ="show_zoneName">' + select+'</h1>';
 	select_zone_name.innerHTML = zone_str;
 	// console.log(zone_str);
@@ -2665,5 +2749,10 @@ function updateList(str, select){
 };
 
 
+//將視野挪動到下方展開的地方
+function scrolltoShow(){
+	var offset = document.querySelector('#selection_wrap').offsetTop - 100;
+	scrollTo(document.documentElement, offset, 1000);
+}
 
 
